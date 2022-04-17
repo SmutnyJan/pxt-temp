@@ -1,52 +1,16 @@
-alarm.onAlarm(function () {
-    music.playTone(262, music.beat(BeatFraction.Whole))
-})
-input.onButtonPressed(Button.A, function () {
-    basic.showLeds(`
-        . . # . .
-        . # # # .
-        . # # # .
-        # # # # #
-        . . # . .
-        `)
-    alarm.turnOnAlarmAndBroadcast()
-})
-radio.onReceivedString(function (receivedString) {
-    vysledek = alarm.receiveBroadcast(receivedString)
-    if (vysledek == true) {
+let jeProvadenaAkce = false
+mikado.onGuardAwaken(Difficulty.Easy, function () {
+    let jeZapnutoHlidani = false
+    if (jeZapnutoHlidani == true) {
+        jeProvadenaAkce = true
         basic.showLeds(`
-            . . # . .
-            . # # # .
-            . # # # .
-            # # # # #
-            . . # . .
-            `)
-    } else {
-        basic.showLeds(`
-            . . # . .
-            . # # # .
-            . # # # .
-            # # # # #
+            # . . . #
+            . # . # .
             . . . . .
+            . # # # .
+            # . . . #
             `)
+        soundExpression.sad.playUntilDone()
+        jeProvadenaAkce = false
     }
 })
-input.onButtonPressed(Button.B, function () {
-    basic.showLeds(`
-        . . # . .
-        . # # # .
-        . # # # .
-        # # # # #
-        . . . . .
-        `)
-    alarm.turnOffAlarmAndBroadcast()
-})
-let vysledek = false
-basic.showLeds(`
-    . . # . .
-    . # # # .
-    . # # # .
-    # # # # #
-    . . . . .
-    `)
-radio.setGroup(1)
